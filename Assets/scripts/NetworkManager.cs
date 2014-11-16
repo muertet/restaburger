@@ -142,7 +142,7 @@ public class NetworkManager : Photon.MonoBehaviour
 			}
 
 			if (GUI.Button(new Rect(Screen.width/2, Screen.height -100, 100, 20),"Updates")) {
-				Application.OpenURL("http://yelidmod.com/games/");
+				Application.OpenURL("http://yelidmod.com/burger/");
 			}
 
 			GUILayout.FlexibleSpace();
