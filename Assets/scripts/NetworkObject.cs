@@ -31,7 +31,7 @@ public class NetworkObject : Photon.MonoBehaviour {
 		if (food != null) {
 			food.setLastHolder(viewId);
 		} else if (plate != null) {
-			plate.setLastHolder(viewId);
+			plate.setCurrentHolder(viewId);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class NetworkObject : Photon.MonoBehaviour {
 		if (food != null) {
 			food.setLastHolder(0);
 		} else if (plate != null) {
-			plate.setLastHolder(0);
+			plate.unHold();
 		}
 		if (rigidbody != null) {
 			rigidbody.isKinematic = false;

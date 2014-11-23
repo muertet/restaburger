@@ -58,7 +58,8 @@ public class Food : MonoBehaviour {
 	}
 
 	IEnumerator Cook() {
-		for (float f = 1f; f >= 0; f -= 0.1f) {
+		float sColor = renderer.material.color.a;
+		for (float f = sColor; f >= 0; f -= 0.1f) {
 			Color c = renderer.material.color;
 			c.a = f;
 			c.r = f;

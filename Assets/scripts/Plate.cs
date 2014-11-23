@@ -5,16 +5,26 @@ public class Plate : MonoBehaviour {
 	
 	public bool hasFood = false;
 	private int lastHolder = 0;
+	private int currentHolder = 0;
 
 	public bool isHolded () {
-		if (this.lastHolder != 0) {
+		if (this.currentHolder != 0) {
 			return true;
 		}
 		return false;
 	}
 
-	public void setLastHolder (int holder) {
+	public int getLastHolder () {
+		return this.lastHolder;
+	}
+
+	public void setCurrentHolder (int holder) {
+		this.currentHolder = holder;
 		this.lastHolder = holder;
+	}
+
+	public void unHold () {
+		this.currentHolder = 0;
 	}
 
 	void OnCollisionEnter (Collision collision) {

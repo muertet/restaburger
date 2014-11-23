@@ -5,7 +5,7 @@ public class NetworkManager : Photon.MonoBehaviour
 {
 	public static PhotonView myPhotonView;
 	private static string defaultNick = "Simple Worker";
-	const string GAME_VERSION = "0.1";
+	const string GAME_VERSION = "0.3";
 
 	void Start () {
 		PhotonNetwork.player.name = PlayerPrefs.GetString("Username", defaultNick);
@@ -109,7 +109,7 @@ public class NetworkManager : Photon.MonoBehaviour
 			float rWidth = (Screen.width/2) - 200;
 
 			GUI.Label(new Rect(perCent(30, Screen.width), perCent(30, Screen.height), 400, 120), "<size=20>¡Wellcome back</size>");
-			PhotonNetwork.player.name = GUI.TextField(new Rect(perCent(44, Screen.width), perCent(30, Screen.height), 130, 30), PhotonNetwork.player.name);
+			PhotonNetwork.player.name = GUI.TextField(new Rect(perCent(47, Screen.width), perCent(30, Screen.height), 130, 30), PhotonNetwork.player.name);
 			GUI.Label(new Rect(perCent(65, Screen.width), perCent(30, Screen.height), 400, 120), "<size=20>!</size>");
 			GUILayout.EndHorizontal();
 

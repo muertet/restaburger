@@ -24,15 +24,19 @@ public class ServeArea : MonoBehaviour {
 		// delete the food from the plate
 		foreach (Transform child in collision.gameObject.transform) {
 			PhotonNetwork.Destroy(child.gameObject);
-			//PhotonNetwork.Destroy(child.gameObject);
 		}
 		plate.hasFood = false;
 		this.served = true;
-
 
 		// spawn the bucks
 		for (int i = 1; i <= price; i++) {
 			PhotonNetwork.Instantiate ("Buck", new Vector3 (transform.position.x, transform.position.y + 0.20f, transform.position.z), Quaternion.identity, 0);
 		}
+
+		// score +1 to player that served it
+		if (NetworkManager.myPhotonView.viewID == plate.getLastHolder()) {
+			Kongregate.score("ServedClients", 1);
+		}
+
 	}
 }

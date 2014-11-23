@@ -28,6 +28,8 @@ public class Chat : MonoBehaviour {
 	{
 		string chatName = PhotonNetwork.player.name;
 
+		if (PhotonNetwork.offlineMode) { return;} // do not display chat in offline mode
+
 		if (GameLogic.showChat)
 		{
 			Screen.lockCursor = false;
