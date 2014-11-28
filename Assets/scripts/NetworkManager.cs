@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class NetworkManager : Photon.MonoBehaviour
 {
 	public static PhotonView myPhotonView;
 	private static string defaultNick = "Simple Worker";
-	const string GAME_VERSION = "0.3";
+	const string GAME_VERSION = "0.1";
 
 	void Start () {
 		PhotonNetwork.player.name = PlayerPrefs.GetString("Username", defaultNick);
+
+		if (PhotonNetwork.connected == false && PhotonNetwork.connectionStateDetailed != PeerState.Joining) {
+			Text nick = GameObject.Find("Nick").GetComponentInChildren<Text>();
+			nick.text = PlayerPrefs.GetString("Username", defaultNick);
+		}
 	}
 
 	void OnDestroy() {
@@ -20,16 +26,6 @@ public class NetworkManager : Photon.MonoBehaviour
 		}
 
 		PlayerPrefs.SetString("Username", name);
-	}
-	
-	public void Connect() {
-		PhotonNetwork.ConnectUsingSettings( GAME_VERSION );
-	}
-	
-	void OnJoinedLobby()
-	{
-		//Debug.Log("JoinRandom");
-		PhotonNetwork.JoinRandomRoom();
 	}
 	
 	void OnPhotonRandomJoinFailed()
@@ -86,72 +82,40 @@ public class NetworkManager : Photon.MonoBehaviour
 	private float perCent (float percent, float original) {
 		return (original * percent) / 100;
 	}
-	
+
+	public void playSingleplayer () {
+		PhotonNetwork.offlineMode = true;
+		PhotonNetwork.JoinRandomRoom();
+		GameObject.Find ("MainMenu").SetActive (false);
+	}
+
+	public void Connect() {
+		GameObject.Find ("MainMenu").SetActive (false);
+		PhotonNetwork.ConnectUsingSettings( GAME_VERSION );
+	}
+
+	public void openAboutPage () {
+		Application.OpenURL("http://yelidmod.com/burger/");
+	}
+
+	public void updateNick () {
+		string nick = GameObject.Find ("Nick").GetComponentInChildren<Text> ().text;
+		if (nick == "") { return; }
+		PhotonNetwork.player.name = nick;
+	}
+	public static void updateNick (string nick) {
+		if (nick == "") { return; }
+		GameObject.Find ("Nick").GetComponentInChildren<Text> ().text = nick;
+		PhotonNetwork.player.name = nick;
+	}
+
+	void OnJoinedLobby () {
+		//RoomInfo[] rooms = PhotonNetwork.GetRoomList();
+		PhotonNetwork.JoinRandomRoom();
+	}
 
 	void OnGUI()
 	{
-		if(PhotonNetwork.connected == false && PhotonNetwork.connectionStateDetailed != PeerState.Joining) {
-			Screen.lockCursor = false;
-			// for faster testing
-			if (PhotonNetwork.player.name == "tester") {
-				Connect ();
-				return;
-			}
-			//GUI.matrix = matrix;
-			GUILayout.BeginArea( new Rect(0, 0, Screen.width, Screen.height) );
-			GUILayout.BeginHorizontal();
-			GUILayout.FlexibleSpace();
-			GUILayout.BeginVertical();
-			GUILayout.FlexibleSpace();
-			
-			GUILayout.BeginHorizontal();
-
-			float rWidth = (Screen.width/2) - 200;
-
-			GUI.Label(new Rect(perCent(30, Screen.width), perCent(30, Screen.height), 400, 120), "<size=20>¡Wellcome back</size>");
-			PhotonNetwork.player.name = GUI.TextField(new Rect(perCent(47, Screen.width), perCent(30, Screen.height), 130, 30), PhotonNetwork.player.name);
-			GUI.Label(new Rect(perCent(65, Screen.width), perCent(30, Screen.height), 400, 120), "<size=20>!</size>");
-			GUILayout.EndHorizontal();
-
-			/*
-			if (UILayout.Button("SinglePlayer")) {
-				PhotonNetwork.offlineMode = true;
-				OnJoinedLobby();
-			}
-			
-			if (GUILayout.Button("MultiPlayer")) {
-				Connect();
-			}
-
-			if (GUILayout.Button("Updates")) {
-				Application.OpenURL("http://yelidmod.com");
-			}
-			 */
-
-
-			GUI.Label(new Rect(rWidth, 20, 400, 120), "<color=white><size=60><b>RestABurger</b></size></color>");
-
-
-			if (GUI.Button(new Rect(rWidth, Screen.height/2, 140, 90), "Singleplayer")) {
-				PhotonNetwork.offlineMode = true;
-				OnJoinedLobby();
-			}
-			
-			if (GUI.Button(new Rect(Screen.width/2, Screen.height/2, 140, 90), "Multiplayer")) {
-				Connect();
-			}
-
-			if (GUI.Button(new Rect(Screen.width/2, Screen.height -100, 100, 20),"Updates")) {
-				Application.OpenURL("http://yelidmod.com/burger/");
-			}
-
-			GUILayout.FlexibleSpace();
-			GUILayout.EndVertical();
-			GUILayout.FlexibleSpace();
-			GUILayout.EndHorizontal();
-			GUILayout.EndArea();
-		}
-		
 		if (PhotonNetwork.connectionStateDetailed == PeerState.Joined)
 		{
 			if (PhotonNetwork.player.name == "tester") {
@@ -193,6 +157,8 @@ public class NetworkManager : Photon.MonoBehaviour
 
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
+		} else {
+			GUILayout.Label("V "+GAME_VERSION+" - "+PhotonNetwork.connectionStateDetailed.ToString());
 		}
 	}
 }

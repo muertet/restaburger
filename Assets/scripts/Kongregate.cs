@@ -21,7 +21,7 @@ public class Kongregate : MonoBehaviour {
 		
 		string[] uData = userInfo.Split("|"[0]);
 		uid = int.Parse(uData[0]);
-		PhotonNetwork.player.name = uData[1];
+		NetworkManager.updateNick(uData[1]);
 		//auth_token = uData[2];
 	}
 	public static bool isAPILoaded ()
