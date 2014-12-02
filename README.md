@@ -2,7 +2,7 @@ RestABurger
 ===================
 
 RestABurger is a food restaurant game where you have to serve your clients on time.
-Made with Unity 4.5.2f1
+Made with Unity 4.6
 
 ![restaburguer](https://github.com/muertet/restaburguer/blob/master/screenshots/1.jpg?raw=true)
 ![restaburguer2](https://github.com/muertet/restaburguer/blob/master/screenshots/2.jpg?raw=true)
@@ -17,10 +17,10 @@ Made with Unity 4.5.2f1
 About the game
 -------------
 
-
-- If food is not cooked, they won't pay the entire order price. (You also have to serve the food on clean plates)
-- Clients will wait for their order, but if you don't serve them on time, they will just leave.
-- ¿Run out of food? Press the red button near cash register and for only 40$ your food provider will appear!
+All of the workers left the restaurant ant and you are the only one left to take over!
+- You must cook the food all the way and serve it on a clean plate to earn the maximum amount of cash.
+- You have to be quick! The customers won’t wait forever!
+- Ran out of food? Press the red button near the cash register to make your food distributor appear for $40!
 
 Please, keep in mind that this is my first Unity project, so folders order is horrible and code may not be accurate.
 
